@@ -26,6 +26,8 @@ cancellation.
 # cd <aget_src_dir>
 # patch -p1 -i aget-bug1.patch
 
+FPR: Note that I have already applied the patch to the code in `src`.
+
 
 3. Compile
 -------------------------------------------------
