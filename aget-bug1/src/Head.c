@@ -77,7 +77,7 @@ void http_head_req(struct request *req)
 				hstrerror(h_errno));
 		exit(1);
 	}
-	strncpy(req->ip, inet_ntoa(*(struct in_addr *)he->h_addr), MAXIPSIZ-1);
+	strncpy(req->ip, inet_ntoa(*(struct in_addr *)he->h_addr_list[0]), MAXIPSIZ-1);
 	bzero(&sin, sizeof(sin));
 	sin.sin_family = AF_INET;
 	sin.sin_addr.s_addr =inet_addr(req->ip);
@@ -145,7 +145,7 @@ int ftp_head_req(struct request *req, int *head_sd)
 				hstrerror(h_errno));
 		exit(1);
 	}
-	strncpy(req->ip, inet_ntoa(*(struct in_addr *)he->h_addr), MAXIPSIZ-1);
+	strncpy(req->ip, inet_ntoa(*(struct in_addr *)he->h_addr_list[0]), MAXIPSIZ-1);
 	bzero(&sin, sizeof(sin));
 	sin.sin_family = AF_INET;
 	sin.sin_addr.s_addr =inet_addr(req->ip);
