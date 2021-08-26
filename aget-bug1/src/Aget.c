@@ -175,7 +175,7 @@ retry:
 		/* Now set tid=-1, so that if an interrupt arrives midway through this loop,
 		 * signal handler won't wait for the same thread
 		 */
-		(int)wthread[i].tid = -1;
+		wthread[i].tid = -1;
 		pthread_testcancel();
 	}
 
@@ -334,7 +334,7 @@ retry:
 		/* Now set tid=-1, so that if an interrupt arrives midway through this loop,
 		 * signal handler won't wait for the same thread
 		 */
-		(int)wthread[i].tid = -1;
+		wthread[i].tid = -1;
 		pthread_testcancel();
 	}
 
@@ -430,7 +430,7 @@ retry:
 		/* Now set tid=-1, so that if an interrupt arrives midway through this loop,
 		 * signal handler won't wait for the same thread
 		 */
-		(int)wthread[i].tid = -1;
+		wthread[i].tid = -1;
 		pthread_testcancel();
 	}
 
