@@ -120,7 +120,7 @@ void createrc(char *f)
 }
 
 
-void readrc()
+void readrc(void)
 {
 	struct passwd *pw;
 	struct stat st;

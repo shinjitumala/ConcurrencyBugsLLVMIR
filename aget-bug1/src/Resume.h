@@ -22,7 +22,7 @@ typedef struct hist_data {
 	struct thread_data wthread[MAXTHREADS];
 } hist_data;
 
-void save_log();
+void save_log(void);
 int read_log(struct hist_data *);
 
 #endif

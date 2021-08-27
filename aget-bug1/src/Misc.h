@@ -19,10 +19,10 @@
 int calc_offset(int, int, int);
 int numofthreads(int);
 void parse_url(char *, struct request *);
-void usage();
+void usage(void);
 void revstr(char *);				/* Reverse String				*/
 void Log(char *, ...);				/* Log 						*/
-void updateProgressBar();
+void updateProgressBar(void);
 void handleHttpRetcode(char *);
 void sendCmd(int, char *, int, char *, int);
 void recvRep(int, char *, int, int);

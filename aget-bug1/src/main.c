@@ -37,7 +37,7 @@ extern char http_proxyuser[VALSIZE];
 extern char http_proxypass[VALSIZE];
 extern int http_proxyport;
 
-extern void readrc();
+extern void readrc(void);
 
 
 int nthreads;

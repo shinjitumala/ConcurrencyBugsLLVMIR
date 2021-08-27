@@ -27,7 +27,7 @@ extern int nthreads;
 extern int bwritten;
 extern time_t t_start, t_finish;
 
-void save_log()
+void save_log(void)
 {
 	char *logfile, *s;
 	struct hist_data h;

@@ -159,7 +159,7 @@ int calc_offset(int total, int part, int nthreads)
 	return (part * (total / nthreads));
 }
 
-void usage()
+void usage(void)
 {
 	fprintf(stderr, "usage: aget [options] url\n");
 	fprintf(stderr, "\toptions:\n");
@@ -217,7 +217,7 @@ void Log(char *fmt, ...)
  * i.e., this guarantees display of progress bar every 5 seconds at least
  * and atmost every one second.
  */
-void updateProgressBar()
+void updateProgressBar(void)
 {
 	float rat;
 	int ndot, i, j;
