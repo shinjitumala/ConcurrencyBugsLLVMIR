@@ -1,0 +1,12 @@
+*.o
+memcached_debug*
+memcached-debug
+config.h
+config.log
+config.status
+memcached
+.deps
+sizes
+stamp-h1
+testapp
+timedrun
