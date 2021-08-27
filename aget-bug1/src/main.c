@@ -24,6 +24,8 @@
 #include "Signal.h"
 #include "Resume.h"
 
+#include "../main.h"
+
 #define VALSIZE 256
 
 
@@ -45,7 +47,7 @@ pthread_t hthread;		/* Helper thread for signals	*/
 struct thread_data *wthread;	/* Worker Threads		*/
 pthread_t main_tid;
 
-int main(int argc, char **argv)
+int real_main(int argc, char **argv)
 {
 	int c, error = 0;
 	struct hist_data h;
@@ -91,6 +93,9 @@ int main(int argc, char **argv)
 	 */
 	pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, NULL);
 
+	// FPR: A VERY basic deadlock detector.
+	pthread_t t_deadlock_detector;
+	pthread_create(&t_deadlock_detector, NULL, sr_deadlock_detector, NULL);
 
 	/* Read the RC file if exist	*/
 	readrc();
