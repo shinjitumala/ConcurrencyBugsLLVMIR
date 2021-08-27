@@ -20,7 +20,8 @@ void *sr_deadlock_detector(void *unused) {
                      // a basic deadlock detector.
 
   fprintf(stderr, "Start timer.");
-  while (1) {
+  while (1) { // Using busy-wait because it iterferes with the usage of SIGALRM
+              // in aget.
     clock_gettime(CLOCK_REALTIME, &cur);
     if (cur.tv_sec == until.tv_sec) {
       break;
@@ -31,6 +32,7 @@ void *sr_deadlock_detector(void *unused) {
     }
   }
 
+  // This can actually cause undefined behavior but we don't care at this time.
   if (aget_exited == 0) {
     fprintf(stderr, "Deadlock detected. Coredumping...");
     fflush(stderr);
