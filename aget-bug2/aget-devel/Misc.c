@@ -230,8 +230,8 @@ void updateProgressBar()
 	rat = cur/tot;
 	ndot = (int)(rat * 100);
 
-	// FPR: Cancel download at 10%
-	if(0.1 < rat){
+	// FPR: Cancel download at 50%
+	if(0.5 < rat){
 		raise(SIGINT);
 	}
 
