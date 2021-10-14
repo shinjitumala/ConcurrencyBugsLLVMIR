@@ -38,7 +38,7 @@ typedef struct request {
 	int clength;			/* Content-length	*/
 	unsigned char proto;		/* Protocol		*/
 	time_t time_taken;		/* Useful when job is resumed */
-} request;
+} maple_request;
 
 typedef struct thread_data {
 	struct sockaddr_in sin;
@@ -54,18 +54,18 @@ typedef struct thread_data {
 	char password[MAXBUFSIZ];	/* Used in ftp_get() */
 	char url[MAXURLSIZ];		/* Used in ftp_get() */
 	int head_sd;			/* Used for reusing head connection	*/
-} thread_data;
+} maple_thread_data;
 
 typedef struct hist_data {
 	struct request req;
 	int nthreads;
 	int bwritten;
 	struct thread_data wthread[MAXTHREADS];
-} hist_data;
+} maple_hist_data;
 
-unsigned int bwritten;
+unsigned int maple_bwritten;
 
-int read_log(struct hist_data *h)
+int maple_read_log(struct hist_data *h)
 {
 	char *logfile;
 	FILE *fp;
@@ -84,7 +84,7 @@ int read_log(struct hist_data *h)
 	}
 
 	fread(h, sizeof(struct hist_data), 1, fp);
-	bwritten = h->bwritten;
+	maple_bwritten = h->bwritten;
 	fclose(fp);
 
 	if ((unlink(logfile)) == -1) {
@@ -98,15 +98,14 @@ int read_log(struct hist_data *h)
         for (i = 0; i < h->nthreads; i++) {
 		total_bwritten += (h->wthread[i].offset - h->wthread[i].soffset);
 	}
-	assert(total_bwritten == bwritten);
+	assert(total_bwritten == maple_bwritten);
 
 	return 0;
 }
 
-int main(int argc, char *argv[]) {
+void maple_verify() {
 	struct hist_data h;
-	read_log(&h);
+	maple_read_log(&h);
 	printf("results ok!\n");
-	return 0;
 }
 
