@@ -9,6 +9,7 @@
  *
  */
 
+#include <signal.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
@@ -228,6 +229,11 @@ void updateProgressBar()
 
 	rat = cur/tot;
 	ndot = (int)(rat * 100);
+
+	// FPR: Cancel download at 10%
+	if(0.1 < rat){
+		raise(SIGINT);
+	}
 
 	if(ndot > 100)
 		ndot = 100;

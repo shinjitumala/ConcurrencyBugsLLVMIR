@@ -78,19 +78,20 @@ void startHTTP(struct request *req)
 		if(errno == EEXIST) {
 			char reply[MAXBUFSIZ];
 again:
-			fprintf(stderr, "File already exists! Overwrite?(y/n) ");
-			scanf("%2s", reply);
+			fprintf(stderr, "File already exists! Overwrite?(y/n)\n");
+			// FPR: Always overwrite file.
+			// scanf("%2s", reply);
 			
-			if(reply[0] == 'n')
-				exit(1);
-			else if(reply[0] == 'y') {
+			// if(reply[0] == 'n')
+			// 	exit(1);
+			// else if(reply[0] == 'y') {
 				if ((fd = open(req->lfile, O_CREAT | O_RDWR, S_IRWXU)) == -1) {
 					fprintf(stderr, "get: cannot open file %s for writing: %s\n", req->lfile, strerror(errno));
 					exit(1);
 				}
-			}
-			else
-				goto again;
+			// }
+			// else
+			// 	goto again;
 		}
 	}
 
@@ -249,19 +250,20 @@ void startFTP(struct request *req)
 		if(errno == EEXIST) {
 			char reply[MAXBUFSIZ];
 again:
-			fprintf(stderr, "File already exists! Overwrite?(y/n) ");
-			scanf("%2s", reply);
+			fprintf(stderr, "File already exists! Overwrite?(y/n)\n");
+			// FPR: Always overwrite the download file.
+			// scanf("%2s", reply);
 			
-			if(reply[0] == 'n')
-				exit(1);
-			else if(reply[0] == 'y') {
+			// if(reply[0] == 'n')
+			// 	exit(1);
+			// else if(reply[0] == 'y') {
 				if ((fd = open(req->lfile, O_CREAT | O_RDWR, S_IRWXU)) == -1) {
 					fprintf(stderr, "get: cannot open file %s for writing: %s\n", req->lfile, strerror(errno));
 					exit(1);
 				}
-			}
-			else
-				goto again;
+			// }
+			// else
+			// 	goto again;
 		}
 	}
 

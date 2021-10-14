@@ -21,6 +21,8 @@
 #include "Resume.h"
 #include "Misc.h"
 
+#include "../reproduce-pkg/verifier.h"
+
 extern struct thread_data *wthread;
 extern struct request *req;
 extern int nthreads;
@@ -31,7 +33,7 @@ void save_log()
 {
 	char *logfile, *s;
 	struct hist_data h;
-	FILE *fp;
+	// FILE *fp; // FPR: Disable output
 	time_t diff_sec;
 	struct passwd *pw;
 
@@ -66,10 +68,11 @@ void save_log()
 		snprintf(logfile, 255, "%s%s-aget%c.log", pw->pw_dir, s, req->proto == PROTO_HTTP ? 'h' : 'f');
 	}
 
-	if ((fp = fopen(logfile, "w")) == NULL) {
-		fprintf(stderr, "Cannot open log file %s for writing: %s\n", logfile, strerror(errno));
-		exit(1);
-	}
+	// FPR: Disable output.
+	// if ((fp = fopen(logfile, "w")) == NULL) {
+	// 	fprintf(stderr, "Cannot open log file %s for writing: %s\n", logfile, strerror(errno));
+	// 	exit(1);
+	// }
 	
 	/* Get the finish time, derive some stats */
 	time(&t_finish);
@@ -85,8 +88,12 @@ void save_log()
 
 	printf("--> Logfile is: %s, so far %d bytes have been transferred\n", logfile, h.bwritten);
 
-	fwrite(&h, sizeof(struct hist_data), 1, fp);
-	fclose(fp);
+	// FPR: Verify the output here.
+	maple_verify(&h);
+
+	// FPR: Disable output.
+	// fwrite(&h, sizeof(struct hist_data), 1, fp);
+	// fclose(fp);
 
 	free(logfile);
 }
