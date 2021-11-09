@@ -1,4 +1,0 @@
-[submodule "pigz"]
-	path = pigz
-	url = git@github.com:shinjitumala/pigz.git
-	branch = sword
