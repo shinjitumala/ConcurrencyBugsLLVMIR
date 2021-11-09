@@ -19,6 +19,6 @@ char http_proxyuser[VALSIZE];
 char http_proxypass[VALSIZE];
 
 void loadconfig(char *);
-void readrc();
+void readrc(void);
 void removespaces(char *);
 #endif
