@@ -43,6 +43,7 @@
 /*                                                                       */
 /*************************************************************************/
 
+#include "ENV.h"
 #include <stdio.h>
 #include <math.h>
 #define PAGE_SIZE               4096
@@ -52,7 +53,13 @@
 #define DEFAULT_M                 10
 #define DEFAULT_P                  1
 
-MAIN_ENV
+#include <pthread.h>
+#include <sys/time.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <malloc.h>
+#define MAX_THREADS 32
+pthread_t PThreadTable[MAX_THREADS];
 
 #define SWAP_VALS(a,b) {double tmp; tmp=a; a=b; b=tmp;}
 
@@ -190,7 +197,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  MAIN_INITENV(,80000000);
+  // MAIN_INITENV(,80000000);
 
   N = 1<<M;
   rootN = 1<<(M/2);
