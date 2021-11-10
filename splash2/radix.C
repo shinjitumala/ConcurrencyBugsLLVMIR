@@ -109,7 +109,7 @@ long dostats = 0;
 long test_result = 0;
 long doprint = 0;
 
-void slave_sort(void);
+void* slave_sort(void*);
 double product_mod_46(double t1, double t2);
 double ran_num_init(unsigned long k, double b, double t);
 long get_max_digits(long max_key);
@@ -318,8 +318,18 @@ int main(int argc, char *argv[])
    }  */
 
    /* Fill the random-number array. */
-   
-   CREATE(slave_sort, number_of_processors);
+
+   {
+     long i, Error;
+     for (i = 0; i < (number_of_processors)-1; i++) {
+       Error = pthread_create(&PThreadTable[i], __null, slave_sort, __null);
+       if (Error != 0) {
+         printf("Error in pthread_create().\n");
+         exit(-1);
+       }
+     }
+     slave_sort(NULL);
+   };
    WAIT_FOR_END(number_of_processors);
 
    printf("\n");
@@ -395,7 +405,7 @@ int main(int argc, char *argv[])
    MAIN_END;
 }
 
-void slave_sort()
+void* slave_sort(void*)
 {
    long i;
    long MyNum;
@@ -649,6 +659,7 @@ void slave_sort()
      global->final = to;
    }
 
+  return NULL;
 }
 
 /*
