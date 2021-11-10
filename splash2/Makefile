@@ -1,10 +1,14 @@
-all: fft
+all: fft radix
 
 fft: fft.ll
 	clang -lpthread -lm -o $@ $< 
 
-%.ll: %.c
+radix: radix.ll
+	clang -lpthread -o $@ $< 
+
+%.ll: %.C
 	clang -g3 -S -emit-llvm -o $@ $<
 
 clean:
-	find . -type f -naem "*.ll"
+	find . -type f -name "*.ll" -print -delete
+	rm -f fft radix

@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
     }
   }
 
-  // MAIN_INITENV(,80000000);
+  MAIN_INITENV(,80000000);
 
   N = 1<<M;
   rootN = 1<<(M/2);

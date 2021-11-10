@@ -73,27 +73,27 @@
 #define AULOCK                                                                 \
   { pthread_mutex_unlock(&$1[$2]); }
 
-#define PAUSEDEC                                                               \
+#define PAUSEDEC($1)                                                           \
   struct {                                                                     \
     pthread_mutex_t Mutex;                                                     \
     pthread_cond_t CondVar;                                                    \
     unsigned long Flag;                                                        \
   } $1;
 
-#define PAUSEINIT                                                              \
+#define PAUSEINIT($1)                                                          \
   {                                                                            \
     pthread_mutex_init(&$1.Mutex, NULL);                                       \
     pthread_cond_init(&$1.CondVar, NULL);                                      \
     $1.Flag = 0;                                                               \
   }
 
-#define CLEARPAUSE                                                             \
+#define CLEARPAUSE($1)                                                         \
   {                                                                            \
     $1.Flag = 0;                                                               \
     pthread_mutex_unlock(&$1.Mutex);                                           \
   }
 
-#define SETPAUSE                                                               \
+#define SETPAUSE($1)                                                           \
   {                                                                            \
     pthread_mutex_lock(&$1.Mutex);                                             \
     $1.Flag = 1;                                                               \
@@ -103,7 +103,7 @@
 
 #define EVENT                                                                  \
   { ; }
-#define WAITPAUSE                                                              \
+#define WAITPAUSE($1)                                                          \
   {                                                                            \
     pthread_mutex_lock(&$1.Mutex);                                             \
     if ($1.Flag == 0) {                                                        \
@@ -169,7 +169,7 @@
     $1();                                                                      \
   }
 
-#define MAIN_INITENV                                                           \
+#define MAIN_INITENV($1, $2)                                                   \
   { ; }
 #define MAIN_END                                                               \
   { exit(0); }
