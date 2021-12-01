@@ -36,6 +36,7 @@
 /*                                                                       */
 /*************************************************************************/
 
+#include <assert.h>
 
 #include <stdio.h>
 #include <math.h>
@@ -826,6 +827,7 @@ void test_sort(long final)
 
    if (mistake) {
       printf("FAILED: %ld keys out of place.\n", mistake);
+      assert(0);
    } else {
       printf("PASSED: All keys in place.\n");
    }
