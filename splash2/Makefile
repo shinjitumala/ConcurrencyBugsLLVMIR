@@ -1,6 +1,6 @@
 PROGRAMS=fft radix lu_contiguous_blocks lu_non_contiguous_blocks
 
-all: $(PROGRMS)
+all: $(PROGRAMS)
 
 fft: fft.ll
 	clang -lpthread -lm -o $@ $< 
