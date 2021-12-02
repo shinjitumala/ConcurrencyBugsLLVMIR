@@ -5,3 +5,10 @@ string_match
 kmeans
 histogram
 linear_regression
+pca_sanitized
+string_match_sanitized
+matrix_multiply_sanitized
+linear_regression_sanitized
+kmeans_sanitized
+histogram_sanitized
+word_count_sanitized

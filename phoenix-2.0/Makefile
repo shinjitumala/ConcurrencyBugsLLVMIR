@@ -2,8 +2,12 @@ PHOENIX_SRCS=phoenix/tpool.ll phoenix/pt_mutex.ll phoenix/map_reduce.ll phoenix/
 PHOENIX_DEFINES=-D_LINUX_
 
 PROGRAMS=pca word_count matrix_multiply string_match kmeans histogram linear_regression 
+PROGRAMS_SANITIZED=pca_sanitized word_count_sanitized matrix_multiply_sanitized string_match_sanitized kmeans_sanitized histogram_sanitized linear_regression_sanitized 
 
-all: phoenix.ll $(PROGRAMS)
+all: phoenix.ll $(PROGRAMS) $(PROGRAMS_SANITIZED)
+
+%_sanitized: %_linked.ll
+	clang -fsanitize=thread $< -o $@
 
 %_linked.ll: %.ll phoenix.ll
 	llvm-link -S $^ -o $@
@@ -37,4 +41,4 @@ phoenix.ll: $(PHOENIX_SRCS)
 
 clean:
 	find -type f -name "*.ll" -delete -print
-	rm -f $(PROGRAMS)
+	rm -f $(PROGRAMS) $(PROGRAMS_SANITIZED)
