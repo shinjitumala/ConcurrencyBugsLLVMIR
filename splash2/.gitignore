@@ -1,2 +1,4 @@
 fft
 radix
+lu_contiguous_blocks
+lu_non_contiguous_blocks

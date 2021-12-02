@@ -416,6 +416,7 @@ int main(int argc, char *argv[])
       printf("TEST PASSED\n");
     } else {
       printf("TEST FAILED\n");
+      abort();
     }
   }
 
