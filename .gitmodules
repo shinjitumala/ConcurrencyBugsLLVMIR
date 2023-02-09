@@ -1,0 +1,3 @@
+[submodule "lbzip2"]
+	path = lbzip2
+	url = git@github.com:kjn/lbzip2.git
