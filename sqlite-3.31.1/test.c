@@ -23,9 +23,7 @@ int ExecuteQuery(sqlite3 *handle, const char *const query) {
   return SQLITE_OK;
 }
 
-const char *db_path = "foobar.db";
-
-void KeepRunningQuery(const char *const query) {
+void run_twice(const char *db_path, const char *const query) {
   sqlite3 *handle = NULL;
   int ret = sqlite3_open(db_path, &handle);
   if (ret != SQLITE_OK) {
@@ -47,18 +45,7 @@ void KeepRunningQuery(const char *const query) {
   sqlite3_close(handle);
 }
 
-void *thread1(void *) {
-  KeepRunningQuery("INSERT INTO test_table (something, other) VALUES "
-                   "(\"text1\", \"text2\")");
-  return NULL;
-}
-
-void *thread2(void *) {
-  KeepRunningQuery("SELECT something, other FROM test_table");
-  return NULL;
-}
-
-int main(int argc, char *argv[]) {
+int init_db(const char *db_path) {
   int ret = sqlite3_config(SQLITE_CONFIG_MULTITHREAD);
   if (ret != SQLITE_OK) {
     return ret;
@@ -82,14 +69,40 @@ int main(int argc, char *argv[]) {
     return ret;
   }
   sqlite3_close(handle);
+  return SQLITE_OK;
+}
 
+const char *db_path1 = "foo.db";
+const char *db_path2 = "bar.db";
+
+void *thread1(void *) {
+  run_twice(db_path1, "INSERT INTO test_table (something, other) VALUES "
+                      "(\"text1\", \"text2\")");
+  return NULL;
+}
+
+void *thread2(void *) {
+  run_twice(db_path1, "SELECT something, other FROM test_table");
+  return NULL;
+}
+
+int main(int argc, char *argv[]) {
+  system("make clean-db");
+
+  int status;
+
+  // Parallel Execution
+  status = init_db(db_path1);
+  if (status != SQLITE_OK) {
+    return status;
+  }
   pthread_t t1;
   pthread_t t2;
   pthread_create(&t1, NULL, thread1, NULL);
   pthread_create(&t2, NULL, thread2, NULL);
-
   pthread_join(t1, NULL);
   pthread_join(t2, NULL);
 
+  system("make clean-db");
   return 0;
 }

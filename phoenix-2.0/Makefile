@@ -7,7 +7,7 @@ PROGRAMS_SANITIZED=pca_sanitized word_count_sanitized matrix_multiply_sanitized 
 all: phoenix.ll $(PROGRAMS) $(PROGRAMS_SANITIZED)
 
 %_sanitized: %_linked.ll
-	clang -fsanitize=thread $< -o $@
+	clang -fsanitize=address $< -o $@
 
 %_linked.ll: %.ll phoenix.ll
 	llvm-link -S $^ -o $@

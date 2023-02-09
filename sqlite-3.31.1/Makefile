@@ -1,4 +1,4 @@
-all: test test-sanitized source-adce.ll
+all: test test-sanitized # source-adce.ll
 
 test: source.ll
 	clang -lpthread -ldl -o $@ $^
@@ -9,8 +9,8 @@ test-sanitized: test.c sqlite3.c
 source.ll: test.ll sqlite3.ll
 	llvm-link -S $^ -o $@
 
-source-adce.ll: source.ll
-	llvm-link -flto -S -flto $< -o $@
+# source-adce.ll: source.ll
+	# llvm-link -flto -S -flto $< -o $@
 
 %.ll: %.c
 	clang -g3 -I . -S -emit-llvm -o $@ $<
@@ -20,4 +20,4 @@ clean:
 	rm -f test test-sanitized
 
 clean-db:
-	find . -type f -name "foobar.db*" -print -delete
+	find . -type f -name "*.db*" -print -delete
